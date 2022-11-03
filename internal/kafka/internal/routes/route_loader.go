@@ -265,5 +265,15 @@ func (s *options) buildApiBaseRouter(mainRouter *mux.Router, basePath string) er
 		Name(logger.NewLogEvent("admin-update-kafka", "[admin] update kafka by id").ToString()).
 		Methods(http.MethodPatch)
 
+	// /authz-metadata
+	authzMetadataHandler := handlers.NewAuthzMetadataHandler(s.Kafka, s.AccountService, s.ClusterService)
+	authzMetadataRouter := apiV1Router.PathPrefix("/authz-metadata").Subrouter()
+	authzMetadataRouter.HandleFunc("/kafkas/{id}", authzMetadataHandler.GetKafkaRequestData).
+		Name(logger.NewLogEvent("authz-metadata-kafka-request", "get kafka request metadata for authz").ToString()).
+		Methods(http.MethodGet)
+	authzMetadataRouter.HandleFunc("/agent-clusters/{id}", authzMetadataHandler.GetDataPlaneClusterData).
+		Name(logger.NewLogEvent("authz-metadata-dataplane-cluster", "get dataplane cluster metadata for authz").ToString()).
+		Methods(http.MethodGet)
+
 	return nil
 }

@@ -38,6 +38,7 @@ func NewAuthenticationBuilder(ServerConfig *server.ServerConfig, KeycloakConfig 
 			Public(fmt.Sprintf("^%s/%s/?$", routes.ApiEndpoint, routes.KafkasFleetManagementApiPrefix)).
 			Public(fmt.Sprintf("^%s/%s/%s/?$", routes.ApiEndpoint, routes.KafkasFleetManagementApiPrefix, routes.Version)).
 			Public(fmt.Sprintf("^%s/%s/%s/openapi/?$", routes.ApiEndpoint, routes.KafkasFleetManagementApiPrefix, routes.Version)).
-			Public(fmt.Sprintf("^%s/%s/%s/errors/?[0-9]*", routes.ApiEndpoint, routes.KafkasFleetManagementApiPrefix, routes.Version)),
+			Public(fmt.Sprintf("^%s/%s/%s/errors/?[0-9]*", routes.ApiEndpoint, routes.KafkasFleetManagementApiPrefix, routes.Version)).
+			Public(fmt.Sprintf("^%s/%s/%s/authz-metadata/.+$", routes.ApiEndpoint, routes.KafkasFleetManagementApiPrefix, routes.Version)),
 		nil
 }
